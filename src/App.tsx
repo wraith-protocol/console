@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from 'react-router';
-import { useState, useCallback } from 'react';
+import { AuthContext, useAuthProvider, useAuth } from './hooks/useAuth';
 import PageLayout from './components/layout/PageLayout';
 import ProtectedRoute from './components/layout/ProtectedRoute';
 import Overview from './pages/Overview';
@@ -16,20 +16,20 @@ import Register from './pages/Register';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 
-export default function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+function AppRoutes() {
+  const { isAuthenticated, isLoading, logout } = useAuth();
 
-  const handleLogout = useCallback(() => {
-    setIsAuthenticated(false);
-  }, []);
-
-  const handleLogin = useCallback(() => {
-    setIsAuthenticated(true);
-  }, []);
+  if (isLoading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-surface">
+        <p className="text-outline">Loading...</p>
+      </div>
+    );
+  }
 
   return (
     <Routes>
-      <Route path="/login" element={<Login onLogin={handleLogin} />} />
+      <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />
@@ -38,7 +38,7 @@ export default function App() {
         path="/*"
         element={
           <ProtectedRoute isAuthenticated={isAuthenticated}>
-            <PageLayout onLogout={handleLogout}>
+            <PageLayout onLogout={logout}>
               <Routes>
                 <Route path="/" element={<Overview />} />
                 <Route path="/agents" element={<Agents />} />
@@ -56,5 +56,15 @@ export default function App() {
         }
       />
     </Routes>
+  );
+}
+
+export default function App() {
+  const auth = useAuthProvider();
+
+  return (
+    <AuthContext.Provider value={auth}>
+      <AppRoutes />
+    </AuthContext.Provider>
   );
 }
