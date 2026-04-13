@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router';
 import { AuthContext, useAuthProvider, useAuth } from './hooks/useAuth';
+import { TeamContext, useTeamProvider } from './hooks/useTeam';
 import PageLayout from './components/layout/PageLayout';
 import ProtectedRoute from './components/layout/ProtectedRoute';
 import Overview from './pages/Overview';
@@ -16,8 +17,30 @@ import Register from './pages/Register';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 
+function DashboardRoutes() {
+  const { logout } = useAuth();
+
+  return (
+    <PageLayout onLogout={logout}>
+      <Routes>
+        <Route path="/" element={<Overview />} />
+        <Route path="/agents" element={<Agents />} />
+        <Route path="/agents/:id" element={<AgentDetail />} />
+        <Route path="/keys" element={<ApiKeys />} />
+        <Route path="/usage" element={<Usage />} />
+        <Route path="/billing" element={<Billing />} />
+        <Route path="/team" element={<Team />} />
+        <Route path="/webhooks" element={<Webhooks />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </PageLayout>
+  );
+}
+
 function AppRoutes() {
-  const { isAuthenticated, isLoading, logout } = useAuth();
+  const { isAuthenticated, isLoading } = useAuth();
+  const teamState = useTeamProvider(isAuthenticated);
 
   if (isLoading) {
     return (
@@ -28,34 +51,22 @@ function AppRoutes() {
   }
 
   return (
-    <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="/forgot-password" element={<ForgotPassword />} />
-      <Route path="/reset-password" element={<ResetPassword />} />
-
-      <Route
-        path="/*"
-        element={
-          <ProtectedRoute isAuthenticated={isAuthenticated}>
-            <PageLayout onLogout={logout}>
-              <Routes>
-                <Route path="/" element={<Overview />} />
-                <Route path="/agents" element={<Agents />} />
-                <Route path="/agents/:id" element={<AgentDetail />} />
-                <Route path="/keys" element={<ApiKeys />} />
-                <Route path="/usage" element={<Usage />} />
-                <Route path="/billing" element={<Billing />} />
-                <Route path="/team" element={<Team />} />
-                <Route path="/webhooks" element={<Webhooks />} />
-                <Route path="/settings" element={<Settings />} />
-                <Route path="*" element={<Navigate to="/" replace />} />
-              </Routes>
-            </PageLayout>
-          </ProtectedRoute>
-        }
-      />
-    </Routes>
+    <TeamContext.Provider value={teamState}>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route
+          path="/*"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <DashboardRoutes />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </TeamContext.Provider>
   );
 }
 
