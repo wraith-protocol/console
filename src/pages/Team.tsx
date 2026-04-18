@@ -31,7 +31,7 @@ export default function Team() {
         <p className="text-sm text-outline">Manage your team members and settings.</p>
         <button
           onClick={() => setShowInvite(true)}
-          className="bg-primary px-4 py-2 text-sm font-medium text-surface hover:bg-primary/90"
+          className="h-10 bg-primary px-5 font-heading text-[13px] font-semibold tracking-[0.05em] text-surface uppercase transition-colors duration-150 hover:brightness-110"
         >
           Invite Member
         </button>
@@ -39,14 +39,18 @@ export default function Team() {
 
       <div className="border border-outline-variant bg-surface-container">
         {isLoading ? (
-          <p className="p-5 text-sm text-outline">Loading...</p>
+          <div className="flex gap-1.5 p-5">
+            <span className="h-1.5 w-1.5 animate-pulse bg-outline" />
+            <span className="h-1.5 w-1.5 animate-pulse bg-outline [animation-delay:200ms]" />
+            <span className="h-1.5 w-1.5 animate-pulse bg-outline [animation-delay:400ms]" />
+          </div>
         ) : (
           <MemberList members={members} />
         )}
       </div>
 
-      <div className="border border-outline-variant bg-surface-container p-5">
-        <h3 className="mb-4 font-heading text-sm font-semibold text-on-surface">Team Settings</h3>
+      <div className="border border-outline-variant bg-surface-container p-6">
+        <h3 className="mb-5 font-heading text-sm font-semibold text-on-surface">Team Settings</h3>
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -55,35 +59,41 @@ export default function Team() {
           className="space-y-4"
         >
           <div>
-            <label htmlFor="team-name" className="mb-1 block text-sm text-on-surface-variant">
-              Team Name
+            <label
+              htmlFor="team-name"
+              className="mb-1.5 block font-mono text-[10px] font-semibold tracking-[0.05em] text-outline uppercase"
+            >
+              TEAM NAME
             </label>
             <input
               id="team-name"
               type="text"
               value={teamName}
               onChange={(e) => setTeamName(e.target.value)}
-              className="w-full max-w-sm border border-outline-variant bg-surface-bright px-3 py-2 text-sm text-on-surface outline-none focus:border-primary"
+              className="h-11 w-full max-w-sm border border-outline-variant bg-surface px-4 text-sm text-on-surface outline-none transition-colors duration-150 focus:border-primary"
             />
           </div>
           <div>
-            <label htmlFor="team-slug" className="mb-1 block text-sm text-on-surface-variant">
-              Slug
+            <label
+              htmlFor="team-slug"
+              className="mb-1.5 block font-mono text-[10px] font-semibold tracking-[0.05em] text-outline uppercase"
+            >
+              SLUG
             </label>
             <input
               id="team-slug"
               type="text"
               value={teamSlug}
               onChange={(e) => setTeamSlug(e.target.value)}
-              className="w-full max-w-sm border border-outline-variant bg-surface-bright px-3 py-2 text-sm text-on-surface outline-none focus:border-primary"
+              className="h-11 w-full max-w-sm border border-outline-variant bg-surface px-4 text-sm text-on-surface outline-none transition-colors duration-150 focus:border-primary"
             />
           </div>
           <button
             type="submit"
             disabled={updateMutation.isPending}
-            className="bg-primary px-4 py-2 text-sm font-medium text-surface hover:bg-primary/90 disabled:opacity-50"
+            className="h-10 bg-primary px-5 font-heading text-[13px] font-semibold tracking-[0.05em] text-surface uppercase transition-colors duration-150 hover:brightness-110 disabled:opacity-30"
           >
-            {updateMutation.isPending ? 'Saving...' : 'Save'}
+            {updateMutation.isPending ? 'SAVING...' : 'SAVE'}
           </button>
         </form>
       </div>

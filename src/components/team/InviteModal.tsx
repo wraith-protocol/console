@@ -18,9 +18,27 @@ export default function InviteModal({ onClose }: { onClose: () => void }) {
   });
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-surface/80">
-      <div className="w-full max-w-md border border-outline-variant bg-surface-container p-6">
-        <h2 className="mb-4 font-heading text-lg font-semibold text-on-surface">Invite Member</h2>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
+      <div className="w-full max-w-[480px] border border-outline-variant bg-surface-container p-6">
+        <div className="mb-6 flex items-center justify-between">
+          <h2 className="font-heading text-lg font-semibold text-on-surface">Invite Member</h2>
+          <button
+            onClick={onClose}
+            className="text-outline transition-colors duration-150 hover:text-on-surface-variant"
+            aria-label="Close"
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+            >
+              <path d="M4 4l8 8M12 4l-8 8" />
+            </svg>
+          </button>
+        </div>
 
         <form
           onSubmit={(e) => {
@@ -30,14 +48,17 @@ export default function InviteModal({ onClose }: { onClose: () => void }) {
           className="space-y-4"
         >
           {mutation.error && (
-            <div className="border border-error bg-error/10 px-3 py-2 text-sm text-error">
+            <div className="border border-error/30 bg-error/10 px-4 py-3 text-sm text-error">
               {mutation.error instanceof Error ? mutation.error.message : 'Failed to invite'}
             </div>
           )}
 
           <div>
-            <label htmlFor="invite-email" className="mb-1 block text-sm text-on-surface-variant">
-              Email
+            <label
+              htmlFor="invite-email"
+              className="mb-1.5 block font-mono text-[10px] font-semibold tracking-[0.05em] text-outline uppercase"
+            >
+              EMAIL
             </label>
             <input
               id="invite-email"
@@ -45,39 +66,42 @@ export default function InviteModal({ onClose }: { onClose: () => void }) {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full border border-outline-variant bg-surface-bright px-3 py-2 text-sm text-on-surface outline-none focus:border-primary"
+              className="h-11 w-full border border-outline-variant bg-surface px-4 text-sm text-on-surface outline-none transition-colors duration-150 focus:border-primary"
             />
           </div>
 
           <div>
-            <label htmlFor="invite-role" className="mb-1 block text-sm text-on-surface-variant">
-              Role
+            <label
+              htmlFor="invite-role"
+              className="mb-1.5 block font-mono text-[10px] font-semibold tracking-[0.05em] text-outline uppercase"
+            >
+              ROLE
             </label>
             <select
               id="invite-role"
               value={role}
               onChange={(e) => setRole(e.target.value)}
-              className="w-full border border-outline-variant bg-surface-bright px-3 py-2 text-sm text-on-surface outline-none focus:border-primary"
+              className="h-11 w-full border border-outline-variant bg-surface px-4 text-sm text-on-surface outline-none transition-colors duration-150 focus:border-primary"
             >
               <option value="member">Member</option>
               <option value="admin">Admin</option>
             </select>
           </div>
 
-          <div className="flex gap-3">
+          <div className="flex gap-3 pt-2">
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 border border-outline-variant px-4 py-2 text-sm text-on-surface-variant hover:bg-surface-bright"
+              className="h-11 flex-1 border border-outline-variant text-sm text-on-surface-variant transition-colors duration-150 hover:bg-surface-bright"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={mutation.isPending}
-              className="flex-1 bg-primary px-4 py-2 text-sm font-medium text-surface hover:bg-primary/90 disabled:opacity-50"
+              className="h-11 flex-1 bg-primary font-heading text-[13px] font-semibold tracking-[0.05em] text-surface uppercase transition-colors duration-150 hover:brightness-110 disabled:opacity-30"
             >
-              {mutation.isPending ? 'Inviting...' : 'Send Invite'}
+              {mutation.isPending ? 'INVITING...' : 'SEND INVITE'}
             </button>
           </div>
         </form>
