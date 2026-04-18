@@ -26,7 +26,7 @@ export default function ForgotPassword() {
     <div className="flex min-h-screen items-center justify-center bg-surface">
       <div className="w-full max-w-[400px] px-6">
         <div className="mb-8 flex flex-col items-center">
-          <WraithLogo />
+          <img src="/logo.png" alt="Wraith" className="h-10 opacity-90" />
           <span className="mt-3 font-heading text-sm font-semibold tracking-[0.15em] text-on-surface uppercase">
             WRAITH
           </span>
@@ -97,14 +97,5 @@ export default function ForgotPassword() {
         )}
       </div>
     </div>
-  );
-}
-
-function WraithLogo() {
-  return (
-    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M12 2L2 7v10l10 5 10-5V7L12 2zm0 2.18L20 9v6l-8 4-8-4V9l8-4.82z" fill="#c6c6c7" />
-      <path d="M12 6L6 9v6l6 3 6-3V9l-6-3zm0 1.5L16 10v4l-4 2-4-2v-4l4-2.5z" fill="#c6c6c7" />
-    </svg>
   );
 }
