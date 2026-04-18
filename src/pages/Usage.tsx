@@ -23,6 +23,12 @@ import UsageMeter from '../components/billing/UsageMeter';
 
 type Period = 'daily' | 'weekly' | 'monthly';
 
+const periodLabels: Record<Period, string> = {
+  daily: '24h',
+  weekly: '7d',
+  monthly: '30d',
+};
+
 function getDateRange(period: Period) {
   const to = new Date();
   const from = new Date();
@@ -41,6 +47,7 @@ const tooltipStyle = {
   borderRadius: 0,
   color: '#c4c7c5',
   fontSize: 12,
+  fontFamily: 'JetBrains Mono, monospace',
 };
 
 export default function Usage() {
@@ -82,18 +89,18 @@ export default function Usage() {
       <div className="border border-outline-variant bg-surface-container p-5">
         <div className="mb-4 flex items-center justify-between">
           <h3 className="font-heading text-sm font-semibold text-on-surface">Requests Over Time</h3>
-          <div className="flex gap-1">
+          <div className="flex">
             {(['daily', 'weekly', 'monthly'] as Period[]).map((p) => (
               <button
                 key={p}
                 onClick={() => setPeriod(p)}
-                className={`px-3 py-1 text-xs ${
+                className={`px-3 py-1.5 font-mono text-xs transition-colors duration-150 ${
                   period === p
                     ? 'bg-surface-bright text-on-surface'
                     : 'text-outline hover:text-on-surface-variant'
                 }`}
               >
-                {p}
+                {periodLabels[p]}
               </button>
             ))}
           </div>
@@ -102,8 +109,12 @@ export default function Usage() {
           <ResponsiveContainer width="100%" height={280}>
             <LineChart data={daily}>
               <CartesianGrid strokeDasharray="3 3" stroke="#444444" />
-              <XAxis dataKey="date" stroke="#767575" tick={{ fontSize: 12 }} />
-              <YAxis stroke="#767575" tick={{ fontSize: 12 }} />
+              <XAxis
+                dataKey="date"
+                stroke="#767575"
+                tick={{ fontSize: 11, fontFamily: 'JetBrains Mono' }}
+              />
+              <YAxis stroke="#767575" tick={{ fontSize: 11, fontFamily: 'JetBrains Mono' }} />
               <Tooltip contentStyle={tooltipStyle} />
               <Line
                 type="monotone"
@@ -127,8 +138,12 @@ export default function Usage() {
           <ResponsiveContainer width="100%" height={280}>
             <BarChart data={byEndpoint}>
               <CartesianGrid strokeDasharray="3 3" stroke="#444444" />
-              <XAxis dataKey="endpoint" stroke="#767575" tick={{ fontSize: 10 }} />
-              <YAxis stroke="#767575" tick={{ fontSize: 12 }} />
+              <XAxis
+                dataKey="endpoint"
+                stroke="#767575"
+                tick={{ fontSize: 10, fontFamily: 'JetBrains Mono' }}
+              />
+              <YAxis stroke="#767575" tick={{ fontSize: 11, fontFamily: 'JetBrains Mono' }} />
               <Tooltip contentStyle={tooltipStyle} />
               <Bar dataKey="requests" fill="#c6c6c7" />
             </BarChart>
@@ -144,8 +159,12 @@ export default function Usage() {
           <ResponsiveContainer width="100%" height={240}>
             <LineChart data={daily}>
               <CartesianGrid strokeDasharray="3 3" stroke="#444444" />
-              <XAxis dataKey="date" stroke="#767575" tick={{ fontSize: 12 }} />
-              <YAxis stroke="#767575" tick={{ fontSize: 12 }} />
+              <XAxis
+                dataKey="date"
+                stroke="#767575"
+                tick={{ fontSize: 11, fontFamily: 'JetBrains Mono' }}
+              />
+              <YAxis stroke="#767575" tick={{ fontSize: 11, fontFamily: 'JetBrains Mono' }} />
               <Tooltip contentStyle={tooltipStyle} />
               <Line type="monotone" dataKey="tokens" stroke="#22c55e" strokeWidth={2} dot={false} />
             </LineChart>
@@ -162,16 +181,27 @@ export default function Usage() {
         {byKey.length > 0 ? (
           <table className="w-full text-left text-sm">
             <thead>
-              <tr className="border-b border-outline-variant text-xs text-outline">
-                <th className="px-5 py-3 font-medium">Key</th>
-                <th className="px-5 py-3 font-medium">Prefix</th>
-                <th className="px-5 py-3 font-medium">Requests</th>
-                <th className="px-5 py-3 font-medium">Tokens</th>
+              <tr className="border-b border-outline-variant">
+                <th className="px-5 py-3 font-mono text-[10px] font-semibold tracking-[0.05em] text-outline uppercase">
+                  Key
+                </th>
+                <th className="px-5 py-3 font-mono text-[10px] font-semibold tracking-[0.05em] text-outline uppercase">
+                  Prefix
+                </th>
+                <th className="px-5 py-3 font-mono text-[10px] font-semibold tracking-[0.05em] text-outline uppercase">
+                  Requests
+                </th>
+                <th className="px-5 py-3 font-mono text-[10px] font-semibold tracking-[0.05em] text-outline uppercase">
+                  Tokens
+                </th>
               </tr>
             </thead>
             <tbody>
               {byKey.map((k) => (
-                <tr key={k.keyId} className="border-b border-outline-variant">
+                <tr
+                  key={k.keyId}
+                  className="border-b border-outline-variant/30 transition-colors duration-150 hover:bg-surface-bright"
+                >
                   <td className="px-5 py-3 text-on-surface-variant">{k.keyName}</td>
                   <td className="px-5 py-3 font-mono text-xs text-outline">{k.keyPrefix}...</td>
                   <td className="px-5 py-3 text-on-surface-variant">

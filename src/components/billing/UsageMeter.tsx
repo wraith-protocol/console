@@ -12,15 +12,15 @@ export default function UsageMeter({
 
   return (
     <div>
-      <div className="mb-1 flex items-center justify-between text-sm">
-        <span className="text-on-surface-variant">{label}</span>
-        <span className="text-outline">
+      <div className="mb-1.5 flex items-center justify-between">
+        <span className="text-sm text-on-surface-variant">{label}</span>
+        <span className="font-mono text-xs text-outline">
           {current.toLocaleString()} / {limit.toLocaleString()}
         </span>
       </div>
-      <div className="h-2 bg-surface-bright">
+      <div className="h-1 bg-surface-bright">
         <div
-          className={`h-full transition-all ${isNearLimit ? 'bg-error' : 'bg-primary'}`}
+          className={`h-full transition-all duration-150 ${isNearLimit ? 'bg-error' : 'bg-primary'}`}
           style={{ width: `${percentage}%` }}
         />
       </div>
