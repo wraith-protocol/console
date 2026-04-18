@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Sidebar from './Sidebar';
 import Header from './Header';
 
@@ -8,12 +9,14 @@ export default function PageLayout({
   children: React.ReactNode;
   onLogout: () => void;
 }) {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-surface">
-      <Sidebar />
-      <div className="ml-60">
-        <Header onLogout={onLogout} />
-        <main className="p-6">{children}</main>
+      <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      <div className="lg:ml-60">
+        <Header onLogout={onLogout} onMenuToggle={() => setSidebarOpen(!sidebarOpen)} />
+        <main className="p-4 sm:p-6 lg:p-8">{children}</main>
       </div>
     </div>
   );

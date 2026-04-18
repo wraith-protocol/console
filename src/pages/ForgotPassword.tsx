@@ -24,34 +24,49 @@ export default function ForgotPassword() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-surface">
-      <div className="w-full max-w-sm border border-outline-variant bg-surface-container p-8">
-        <h1 className="mb-6 font-heading text-2xl font-semibold text-on-surface">
+      <div className="w-full max-w-[400px] px-6">
+        <div className="mb-8 flex flex-col items-center">
+          <WraithLogo />
+          <span className="mt-3 font-heading text-sm font-semibold tracking-[0.15em] text-on-surface uppercase">
+            WRAITH
+          </span>
+        </div>
+
+        <h1 className="mb-1 text-center font-heading text-2xl font-bold text-on-surface">
           Forgot Password
         </h1>
+        <p className="mb-8 text-center text-sm text-outline">
+          Enter your email to receive a reset link
+        </p>
 
         {sent ? (
-          <div className="space-y-4">
-            <p className="text-sm text-on-surface-variant">
-              If an account exists for {email}, you will receive a password reset link.
-            </p>
+          <div className="space-y-6">
+            <div className="border border-outline-variant bg-surface-container p-5">
+              <p className="text-sm text-on-surface-variant">
+                If an account exists for {email}, you will receive a password reset link.
+              </p>
+            </div>
             <Link
               to="/login"
-              className="block text-center text-sm text-outline hover:text-on-surface-variant"
+              className="block text-center text-sm text-outline transition-colors duration-150 hover:text-on-surface-variant"
             >
-              Back to login
+              &larr; Back to login
             </Link>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-4">
             {error && (
-              <div className="border border-error bg-error/10 px-3 py-2 text-sm text-error">
+              <div className="border border-error/30 bg-error/10 px-4 py-3 text-sm text-error">
                 {error}
               </div>
             )}
 
             <div>
-              <label htmlFor="email" className="mb-1 block text-sm text-on-surface-variant">
-                Email
+              <label
+                htmlFor="email"
+                className="mb-1.5 block font-mono text-[10px] font-semibold tracking-[0.05em] text-outline uppercase"
+              >
+                EMAIL
               </label>
               <input
                 id="email"
@@ -59,27 +74,37 @@ export default function ForgotPassword() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full border border-outline-variant bg-surface-bright px-3 py-2 text-sm text-on-surface outline-none focus:border-primary"
+                placeholder="you@company.com"
+                className="h-11 w-full border border-outline-variant bg-surface px-4 text-sm text-on-surface placeholder:text-outline outline-none transition-colors duration-150 focus:border-primary"
               />
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-primary px-4 py-2 text-sm font-medium text-surface transition-colors hover:bg-primary/90 disabled:opacity-50"
+              className="h-12 w-full bg-primary font-heading text-[13px] font-semibold tracking-[0.05em] text-surface uppercase transition-colors duration-150 hover:brightness-110 disabled:opacity-30"
             >
-              {loading ? 'Sending...' : 'Send Reset Link'}
+              {loading ? 'SENDING...' : 'SEND RESET LINK'}
             </button>
 
             <Link
               to="/login"
-              className="block text-center text-sm text-outline hover:text-on-surface-variant"
+              className="block text-center text-sm text-outline transition-colors duration-150 hover:text-on-surface-variant"
             >
-              Back to login
+              &larr; Back to login
             </Link>
           </form>
         )}
       </div>
     </div>
+  );
+}
+
+function WraithLogo() {
+  return (
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 2L2 7v10l10 5 10-5V7L12 2zm0 2.18L20 9v6l-8 4-8-4V9l8-4.82z" fill="#c6c6c7" />
+      <path d="M12 6L6 9v6l6 3 6-3V9l-6-3zm0 1.5L16 10v4l-4 2-4-2v-4l4-2.5z" fill="#c6c6c7" />
+    </svg>
   );
 }

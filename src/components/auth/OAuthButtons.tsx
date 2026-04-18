@@ -5,14 +5,14 @@ export default function OAuthButtons() {
     <div className="space-y-3">
       <a
         href={getGoogleOAuthUrl()}
-        className="flex w-full items-center justify-center gap-2 border border-outline-variant bg-surface-bright px-4 py-2.5 text-sm text-on-surface-variant transition-colors hover:bg-surface"
+        className="flex h-11 w-full items-center justify-center gap-2.5 border border-outline-variant bg-transparent px-4 text-sm text-on-surface-variant transition-colors duration-150 hover:bg-surface-bright"
       >
         <GoogleIcon />
         Continue with Google
       </a>
       <a
         href={getGithubOAuthUrl()}
-        className="flex w-full items-center justify-center gap-2 border border-outline-variant bg-surface-bright px-4 py-2.5 text-sm text-on-surface-variant transition-colors hover:bg-surface"
+        className="flex h-11 w-full items-center justify-center gap-2.5 border border-outline-variant bg-transparent px-4 text-sm text-on-surface-variant transition-colors duration-150 hover:bg-surface-bright"
       >
         <GithubIcon />
         Continue with GitHub

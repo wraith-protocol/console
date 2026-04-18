@@ -37,16 +37,16 @@ export default function Overview() {
 
       <RecentActivity items={recentActivity} />
 
-      <div className="flex gap-3">
+      <div className="flex flex-wrap gap-3">
         <Link
           to="/agents"
-          className="border border-outline-variant bg-surface-container px-4 py-2 text-sm text-on-surface-variant transition-colors hover:bg-surface-bright"
+          className="flex h-10 items-center border border-outline-variant px-4 text-sm text-on-surface-variant transition-colors duration-150 hover:bg-surface-bright"
         >
           Create Agent
         </Link>
         <Link
           to="/keys"
-          className="border border-outline-variant bg-surface-container px-4 py-2 text-sm text-on-surface-variant transition-colors hover:bg-surface-bright"
+          className="flex h-10 items-center border border-outline-variant px-4 text-sm text-on-surface-variant transition-colors duration-150 hover:bg-surface-bright"
         >
           Create API Key
         </Link>
@@ -54,7 +54,7 @@ export default function Overview() {
           href="https://docs.wraithprotocol.xyz"
           target="_blank"
           rel="noopener noreferrer"
-          className="border border-outline-variant bg-surface-container px-4 py-2 text-sm text-on-surface-variant transition-colors hover:bg-surface-bright"
+          className="flex h-10 items-center border border-outline-variant px-4 text-sm text-on-surface-variant transition-colors duration-150 hover:bg-surface-bright"
         >
           View Docs
         </a>

@@ -2,7 +2,10 @@
 
 @theme {
   --color-surface: #0e0e0e;
+  --color-surface-dim: #080808;
+  --color-surface-container-low: #0e0e0e;
   --color-surface-container: #141414;
+  --color-surface-container-high: #212121;
   --color-surface-bright: #1a1a1a;
   --color-primary: #c6c6c7;
   --color-on-surface: #e6e1e5;
@@ -11,6 +14,7 @@
   --color-outline-variant: #444444;
   --color-error: #ee7d77;
   --color-tertiary: #22c55e;
+  --color-blue: #60a5fa;
 
   --font-heading: 'Space Grotesk', sans-serif;
   --font-body: 'Inter', sans-serif;
@@ -38,9 +42,20 @@ h5,
 h6 {
   font-family: var(--font-heading);
   color: var(--color-on-surface);
+  letter-spacing: -0.02em;
 }
 
 code,
 pre {
   font-family: var(--font-mono);
+}
+
+input,
+select,
+textarea {
+  font-family: var(--font-body);
+}
+
+::selection {
+  background-color: rgba(198, 198, 199, 0.2);
 }
