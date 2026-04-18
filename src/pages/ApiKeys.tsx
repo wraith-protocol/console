@@ -23,14 +23,18 @@ export default function ApiKeys() {
         </p>
         <button
           onClick={() => setShowCreate(true)}
-          className="bg-primary px-4 py-2 text-sm font-medium text-surface hover:bg-primary/90"
+          className="h-10 bg-primary px-5 font-heading text-[13px] font-semibold tracking-[0.05em] text-surface uppercase transition-colors duration-150 hover:brightness-110"
         >
           Create Key
         </button>
       </div>
 
       {isLoading ? (
-        <p className="text-sm text-outline">Loading...</p>
+        <div className="flex gap-1.5 py-8">
+          <span className="h-1.5 w-1.5 animate-pulse bg-outline" />
+          <span className="h-1.5 w-1.5 animate-pulse bg-outline [animation-delay:200ms]" />
+          <span className="h-1.5 w-1.5 animate-pulse bg-outline [animation-delay:400ms]" />
+        </div>
       ) : (
         <div className="border border-outline-variant bg-surface-container">
           <KeyList keys={keys} />
