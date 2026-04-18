@@ -45,7 +45,11 @@ function AppRoutes() {
   if (isLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-surface">
-        <p className="text-outline">Loading...</p>
+        <div className="flex gap-1.5">
+          <span className="h-1.5 w-1.5 animate-pulse bg-outline" />
+          <span className="h-1.5 w-1.5 animate-pulse bg-outline [animation-delay:200ms]" />
+          <span className="h-1.5 w-1.5 animate-pulse bg-outline [animation-delay:400ms]" />
+        </div>
       </div>
     );
   }
