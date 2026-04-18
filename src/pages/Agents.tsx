@@ -13,7 +13,13 @@ export default function Agents() {
   });
 
   if (isLoading) {
-    return <p className="text-sm text-outline">Loading...</p>;
+    return (
+      <div className="flex gap-1.5 py-8">
+        <span className="h-1.5 w-1.5 animate-pulse bg-outline" />
+        <span className="h-1.5 w-1.5 animate-pulse bg-outline [animation-delay:200ms]" />
+        <span className="h-1.5 w-1.5 animate-pulse bg-outline [animation-delay:400ms]" />
+      </div>
+    );
   }
 
   if (agents.length === 0) {
@@ -28,39 +34,70 @@ export default function Agents() {
 
   return (
     <div className="border border-outline-variant bg-surface-container">
-      <table className="w-full text-left text-sm">
-        <thead>
-          <tr className="border-b border-outline-variant text-xs text-outline">
-            <th className="px-4 py-3 font-medium">Name</th>
-            <th className="px-4 py-3 font-medium">Chain</th>
-            <th className="px-4 py-3 font-medium">Address</th>
-            <th className="px-4 py-3 font-medium">Created</th>
-          </tr>
-        </thead>
-        <tbody>
-          {agents.map((agent) => (
-            <tr key={agent.id} className="border-b border-outline-variant hover:bg-surface-bright">
-              <td className="px-4 py-3">
-                <Link
-                  to={`/agents/${agent.id}`}
-                  className="text-on-surface-variant hover:text-on-surface"
-                >
-                  {agent.name}
-                </Link>
-              </td>
-              <td className="px-4 py-3 text-xs text-outline">{agent.chain}</td>
-              <td className="px-4 py-3">
-                <code className="font-mono text-xs text-outline">
-                  {agent.address.slice(0, 6)}...{agent.address.slice(-4)}
-                </code>
-              </td>
-              <td className="px-4 py-3 text-xs text-outline">
-                {new Date(agent.createdAt).toLocaleDateString()}
-              </td>
+      <div className="hidden overflow-x-auto md:block">
+        <table className="w-full text-left text-sm">
+          <thead>
+            <tr className="border-b border-outline-variant">
+              <th className="px-4 py-3 font-mono text-[10px] font-semibold tracking-[0.05em] text-outline uppercase">
+                Name
+              </th>
+              <th className="px-4 py-3 font-mono text-[10px] font-semibold tracking-[0.05em] text-outline uppercase">
+                Chain
+              </th>
+              <th className="px-4 py-3 font-mono text-[10px] font-semibold tracking-[0.05em] text-outline uppercase">
+                Address
+              </th>
+              <th className="px-4 py-3 font-mono text-[10px] font-semibold tracking-[0.05em] text-outline uppercase">
+                Created
+              </th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {agents.map((agent) => (
+              <tr
+                key={agent.id}
+                className="border-b border-outline-variant/30 transition-colors duration-150 hover:bg-surface-bright"
+              >
+                <td className="px-4 py-3">
+                  <Link
+                    to={`/agents/${agent.id}`}
+                    className="text-on-surface-variant transition-colors duration-150 hover:text-on-surface"
+                  >
+                    {agent.name}
+                  </Link>
+                </td>
+                <td className="px-4 py-3 text-xs text-outline">{agent.chain}</td>
+                <td className="px-4 py-3">
+                  <code className="font-mono text-xs text-outline">
+                    {agent.address.slice(0, 6)}...{agent.address.slice(-4)}
+                  </code>
+                </td>
+                <td className="px-4 py-3 text-xs text-outline">
+                  {new Date(agent.createdAt).toLocaleDateString()}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="space-y-0 md:hidden">
+        {agents.map((agent) => (
+          <Link
+            key={agent.id}
+            to={`/agents/${agent.id}`}
+            className="block border-b border-outline-variant/30 p-4 transition-colors duration-150 hover:bg-surface-bright"
+          >
+            <div className="mb-1 flex items-center justify-between">
+              <span className="text-sm text-on-surface">{agent.name}</span>
+              <span className="text-xs text-outline">{agent.chain}</span>
+            </div>
+            <code className="block font-mono text-xs text-outline">
+              {agent.address.slice(0, 6)}...{agent.address.slice(-4)}
+            </code>
+          </Link>
+        ))}
+      </div>
     </div>
   );
 }

@@ -73,15 +73,15 @@ export default function Webhooks() {
         <p className="text-sm text-outline">Manage webhook endpoints for event notifications.</p>
         <button
           onClick={() => setShowCreate(true)}
-          className="bg-primary px-4 py-2 text-sm font-medium text-surface hover:bg-primary/90"
+          className="h-10 bg-primary px-5 font-heading text-[13px] font-semibold tracking-[0.05em] text-surface uppercase transition-colors duration-150 hover:brightness-110"
         >
           Add Webhook
         </button>
       </div>
 
       {showCreate && (
-        <div className="border border-outline-variant bg-surface-container p-5">
-          <h3 className="mb-4 font-heading text-sm font-semibold text-on-surface">New Webhook</h3>
+        <div className="border border-outline-variant bg-surface-container p-6">
+          <h3 className="mb-5 font-heading text-sm font-semibold text-on-surface">New Webhook</h3>
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -90,7 +90,10 @@ export default function Webhooks() {
             className="space-y-4"
           >
             <div>
-              <label htmlFor="webhook-url" className="mb-1 block text-sm text-on-surface-variant">
+              <label
+                htmlFor="webhook-url"
+                className="mb-1.5 block font-mono text-[10px] font-semibold tracking-[0.05em] text-outline uppercase"
+              >
                 URL
               </label>
               <input
@@ -100,19 +103,21 @@ export default function Webhooks() {
                 value={newUrl}
                 onChange={(e) => setNewUrl(e.target.value)}
                 placeholder="https://example.com/webhooks"
-                className="w-full border border-outline-variant bg-surface-bright px-3 py-2 text-sm text-on-surface outline-none focus:border-primary"
+                className="h-11 w-full border border-outline-variant bg-surface px-4 text-sm text-on-surface placeholder:text-outline outline-none transition-colors duration-150 focus:border-primary"
               />
             </div>
 
             <div>
-              <p className="mb-2 text-sm text-on-surface-variant">Events</p>
+              <p className="mb-2 font-mono text-[10px] font-semibold tracking-[0.05em] text-outline uppercase">
+                EVENTS
+              </p>
               <div className="flex flex-wrap gap-2">
                 {AVAILABLE_EVENTS.map((event) => (
                   <button
                     key={event}
                     type="button"
                     onClick={() => toggleEvent(event)}
-                    className={`px-3 py-1 text-xs ${
+                    className={`h-8 px-3 font-mono text-xs transition-colors duration-150 ${
                       newEvents.includes(event)
                         ? 'bg-primary text-surface'
                         : 'border border-outline-variant text-outline hover:text-on-surface-variant'
@@ -124,20 +129,20 @@ export default function Webhooks() {
               </div>
             </div>
 
-            <div className="flex gap-3">
+            <div className="flex gap-3 pt-2">
               <button
                 type="button"
                 onClick={() => setShowCreate(false)}
-                className="border border-outline-variant px-4 py-2 text-sm text-on-surface-variant hover:bg-surface-bright"
+                className="flex h-10 items-center border border-outline-variant px-4 text-sm text-on-surface-variant transition-colors duration-150 hover:bg-surface-bright"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={createMutation.isPending || newEvents.length === 0}
-                className="bg-primary px-4 py-2 text-sm font-medium text-surface hover:bg-primary/90 disabled:opacity-50"
+                className="h-10 bg-primary px-5 font-heading text-[13px] font-semibold tracking-[0.05em] text-surface uppercase transition-colors duration-150 hover:brightness-110 disabled:opacity-30"
               >
-                {createMutation.isPending ? 'Creating...' : 'Create'}
+                {createMutation.isPending ? 'CREATING...' : 'CREATE'}
               </button>
             </div>
           </form>
@@ -145,7 +150,11 @@ export default function Webhooks() {
       )}
 
       {isLoading ? (
-        <p className="text-sm text-outline">Loading...</p>
+        <div className="flex gap-1.5 py-8">
+          <span className="h-1.5 w-1.5 animate-pulse bg-outline" />
+          <span className="h-1.5 w-1.5 animate-pulse bg-outline [animation-delay:200ms]" />
+          <span className="h-1.5 w-1.5 animate-pulse bg-outline [animation-delay:400ms]" />
+        </div>
       ) : webhooks.length === 0 ? (
         <div className="border border-outline-variant bg-surface-container p-8 text-center">
           <p className="text-sm text-outline">No webhooks configured.</p>
@@ -154,14 +163,14 @@ export default function Webhooks() {
         <div className="space-y-4">
           {webhooks.map((wh) => (
             <div key={wh.id} className="border border-outline-variant bg-surface-container p-5">
-              <div className="flex items-start justify-between">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                 <div>
                   <code className="font-mono text-sm text-on-surface-variant">{wh.url}</code>
                   <div className="mt-2 flex flex-wrap gap-1">
                     {wh.events.map((event) => (
                       <span
                         key={event}
-                        className="border border-outline-variant px-2 py-0.5 text-xs text-outline"
+                        className="inline-flex px-2 py-0.5 font-mono text-[10px] tracking-wider text-outline bg-surface-bright uppercase"
                       >
                         {event}
                       </span>
@@ -171,20 +180,22 @@ export default function Webhooks() {
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => toggleMutation.mutate({ id: wh.id, active: !wh.active })}
-                    className={`px-3 py-1 text-xs ${wh.active ? 'text-tertiary' : 'text-outline'}`}
+                    className={`inline-flex px-2 py-0.5 font-mono text-[10px] tracking-wider uppercase transition-colors duration-150 ${
+                      wh.active ? 'bg-tertiary/10 text-tertiary' : 'bg-surface-bright text-outline'
+                    }`}
                   >
                     {wh.active ? 'Active' : 'Inactive'}
                   </button>
                   <button
                     onClick={() => testMutation.mutate(wh.id)}
                     disabled={testMutation.isPending}
-                    className="border border-outline-variant px-3 py-1 text-xs text-on-surface-variant hover:bg-surface-bright"
+                    className="flex h-7 items-center border border-outline-variant px-3 text-xs text-on-surface-variant transition-colors duration-150 hover:bg-surface-bright"
                   >
                     Test
                   </button>
                   <button
                     onClick={() => deleteMutation.mutate(wh.id)}
-                    className="text-xs text-error hover:text-error/80"
+                    className="text-xs text-error transition-colors duration-150 hover:text-error/80"
                   >
                     Delete
                   </button>
