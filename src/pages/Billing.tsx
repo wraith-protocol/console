@@ -34,19 +34,25 @@ export default function Billing() {
   });
 
   if (isLoading) {
-    return <p className="text-sm text-outline">Loading...</p>;
+    return (
+      <div className="flex gap-1.5 py-8">
+        <span className="h-1.5 w-1.5 animate-pulse bg-outline" />
+        <span className="h-1.5 w-1.5 animate-pulse bg-outline [animation-delay:200ms]" />
+        <span className="h-1.5 w-1.5 animate-pulse bg-outline [animation-delay:400ms]" />
+      </div>
+    );
   }
 
   return (
     <div className="space-y-6">
       {billing && (
-        <div className="border border-outline-variant bg-surface-container p-5">
-          <div className="mb-4 flex items-center justify-between">
+        <div className="border border-primary bg-surface-container p-6">
+          <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <h3 className="font-heading text-sm font-semibold text-on-surface">
-                Current Plan: {billing.plan.name}
+              <h3 className="font-heading text-lg font-semibold text-on-surface">
+                {billing.plan.name}
               </h3>
-              <p className="text-xs text-outline">
+              <p className="mt-1 text-xs text-outline">
                 Period ends {new Date(billing.currentPeriodEnd).toLocaleDateString()}
               </p>
             </div>
@@ -54,7 +60,7 @@ export default function Billing() {
               <button
                 onClick={() => portalMutation.mutate()}
                 disabled={portalMutation.isPending}
-                className="border border-outline-variant px-4 py-2 text-sm text-on-surface-variant hover:bg-surface-bright"
+                className="flex h-10 items-center border border-outline-variant px-4 text-sm text-on-surface-variant transition-colors duration-150 hover:bg-surface-bright"
               >
                 Manage Subscription
               </button>

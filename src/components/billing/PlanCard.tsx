@@ -16,37 +16,41 @@ export default function PlanCard({
       }`}
     >
       <h3 className="font-heading text-lg font-semibold text-on-surface">{plan.name}</h3>
-      <p className="mt-1 text-2xl font-semibold text-on-surface">
+      <p className="mt-2 font-heading text-[28px] font-bold text-on-surface">
         ${plan.price}
         <span className="text-sm font-normal text-outline">/mo</span>
       </p>
 
-      <ul className="mt-4 space-y-2">
+      <ul className="mt-5 space-y-2">
         {plan.features.map((feature) => (
           <li key={feature} className="flex items-center gap-2 text-sm text-on-surface-variant">
-            <span className="text-tertiary">&#10003;</span>
+            <span className="text-xs text-tertiary">&#10003;</span>
             {feature}
           </li>
         ))}
       </ul>
 
-      <div className="mt-4 space-y-1 text-xs text-outline">
-        <p>{plan.limits.requestsPerMonth.toLocaleString()} requests/mo</p>
-        <p>{plan.limits.tokensPerMonth.toLocaleString()} tokens/mo</p>
-        <p>{plan.limits.apiKeys} API keys</p>
-        <p>{plan.limits.teamMembers} team members</p>
+      <div className="mt-5 space-y-1.5">
+        <p className="font-mono text-[11px] text-outline">
+          {plan.limits.requestsPerMonth.toLocaleString()} requests/mo
+        </p>
+        <p className="font-mono text-[11px] text-outline">
+          {plan.limits.tokensPerMonth.toLocaleString()} tokens/mo
+        </p>
+        <p className="font-mono text-[11px] text-outline">{plan.limits.apiKeys} API keys</p>
+        <p className="font-mono text-[11px] text-outline">{plan.limits.teamMembers} team members</p>
       </div>
 
       {isCurrent ? (
-        <div className="mt-4 border border-primary px-4 py-2 text-center text-sm text-primary">
+        <div className="mt-5 flex h-10 items-center justify-center border border-primary text-sm text-primary">
           Current Plan
         </div>
       ) : onSelect ? (
         <button
           onClick={onSelect}
-          className="mt-4 w-full bg-primary px-4 py-2 text-sm font-medium text-surface hover:bg-primary/90"
+          className="mt-5 h-10 w-full bg-primary font-heading text-[13px] font-semibold tracking-[0.05em] text-surface uppercase transition-colors duration-150 hover:brightness-110"
         >
-          Upgrade
+          UPGRADE
         </button>
       ) : null}
     </div>
